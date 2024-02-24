@@ -65,6 +65,8 @@ create table [dbo].[Categories] (
 	[LastModifiedBy] int,
 	[DeletedAt] datetime default getdate(),
 	[DeletedBy] int
+
+	CONSTRAINT FK_Categories_Categories FOREIGN KEY([ParentId]) REFERENCES [dbo].[Categories]([Id])
 )
 
 create table [dbo].[Specifications] (
@@ -100,6 +102,8 @@ create table [dbo].[SpecificationValues] (
 	[SpecificationId] int not null,
 	[ProductId] int not null,
 	[Value] varchar(50) not null
+
+	CONSTRAINT PK_SpecificationValues PRIMARY KEY ([SpecificationId], [ProductId])
 )
 
 create table [dbo].[ProductImages] (
