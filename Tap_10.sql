@@ -1,5 +1,8 @@
-﻿create database [Library]
+create database [Library]
 use [Library]
+
+--=[ Delete Table ]=--
+drop table [dbo].[Books]
 
 --=[ INIT ]=--
 create table [dbo].[Books] (
@@ -9,20 +12,26 @@ create table [dbo].[Books] (
 	[Genre] nvarchar(50) not null,
 	[Price] decimal(18, 2) not null,
 	[PageCount] int not null,
-	[Published] Date default getdate() not null,
 	[CreatedDate] Date default getdate() not null
 
 	CONSTRAINT PK_Books PRIMARY KEY (Id)
 )
 
+create table [dbo].[Publishes] (
+	[BookId] int,
+	[Published] Date default getdate() not null
+
+	CONSTRAINT FK_Publishes_Books FOREIGN KEY ([BookId]) REFERENCES [dbo].[Books]([Id])
+)
+
 
 --=[ Part 6 ]=--
 INSERT INTO [dbo].[Books]
-VALUES ('1984', 'George Orwell', 'Fiction', 3.5, 110, '1948-06-02', '2003-05-23')
-		,('Oliver Twist', 'Charles Dickens', 'Adventure', 3.5, 134, '1878-03-14', '2000-02-01')
-		,('Dağılma remzleri', 'Çingiz Abdullayev', 'Detective', 11.99, 496, '2004-06-02', '2005-05-23')
-		,('Oliqarxın sehvi', 'Çingiz Abdullayev', 'Detective', 6.72, 110, '2005-06-02', '2006-05-23')
-		,('The Da Vinci Code', ' Dan Brown', 'Mystery', 16.99, 	689, '2000-06-02', '2003-05-23')
+VALUES ('1984', 'George Orwell', 'Fiction', 3.5, 110, '1948-06-02')
+		,('Oliver Twist', 'Charles Dickens', 'Adventure', 3.5, 134, '1878-03-14')
+		,('Dağılma remzleri', 'Çingiz Abdullayev', 'Detective', 11.99, 496, '2004-06-02')
+		,('Oliqarxın sehvi', 'Çingiz Abdullayev', 'Detective', 6.72, 110, '2005-06-02')
+		,('The Da Vinci Code', ' Dan Brown', 'Mystery', 16.99, 	689, '2000-06-02')
 
 --=[ Part 7 ]=--
 select * 
